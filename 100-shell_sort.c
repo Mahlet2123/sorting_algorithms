@@ -24,11 +24,9 @@ void shell_sort(int *array, size_t size)
 			{
 				if (array[i] < array[i + gap])
 					break;
-				else
-				{
-					temp = array[i];
-					array[i] = array[i + gap];
-					array[i + gap] = temp;
+				temp = array[i];
+				array[i] = array[i + gap];
+				array[i + gap] = temp;
 				}
 			}
 		}
