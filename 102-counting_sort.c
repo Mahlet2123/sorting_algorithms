@@ -11,7 +11,7 @@
 void counting_sort(int *array, size_t size)
 {
 	unsigned int i;
-	int *count, *new_array, k, j;
+	int *count, k, j;
 
 	k = array[0];
 	for (i = 1; i < size; i++)
@@ -21,11 +21,15 @@ void counting_sort(int *array, size_t size)
 			k = array[i];
 		}
 	}
+
 	count = malloc(sizeof(int) * (k + 1));
 	if (count == NULL)
 		return;
+
 	for (j = 0; j <= k; i++)
 		count[j] = 0;
+	for (j = 0; j < 100; j++)
+		printf("%d ", count[j]);
 	for (i = 0; i < size; i++)
 		count[array[i]]++;
 	for (j = 1; j < k; i++)
@@ -33,15 +37,18 @@ void counting_sort(int *array, size_t size)
 		count[j] = count[j] + count[j - 1];
 		printf("%d, ", count[j]);
 	}
-	new_array = malloc(sizeof(int) * size);
-	if (new_array == NULL)
-		return;
-	for (i = size - 1; i > 0; i--)
-	{
-		new_array[count[array[i] - 1]] = array[i];
-	}
+	
 	for (i = 0; i < size; i++)
-		array[i] = new_array[i];
+	{
+		/** new_array[--count[array[i]]] = array[i]; */
+		j = count[array[i]] - 1;
+		if (array[i] != array[j])
+		{
+			k = array[i];
+			array[i] = array[j];
+			array[j] = k;
+		}
+	}
 	print_array(array, size);
-	free(count), free(new_array); 
+	free(count); 
 }
